@@ -1,0 +1,4 @@
+INSERT INTO Customer (Customer_id, Name, Contact_number, delivery_address)
+SELECT 1, 'John Doe', '1234567890', '123 Main Street, Cityville' FROM DUAL UNION ALL
+SELECT 2, 'Jane Smith', '9876543210', '456 Oak Avenue, Townsville' FROM DUAL UNION ALL
+SELECT 3, 'Samuel Johnson', '5555555555', '789 Pine Road, Villageton' FROM DUAL;
