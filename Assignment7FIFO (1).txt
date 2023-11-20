@@ -1,0 +1,99 @@
+package ass7;
+import java.util.Scanner;
+
+public class ass7 {
+
+
+		public static void main(String args[]) {
+			Scanner sc = new Scanner(System.in);
+			int noofpages, capacity, index = 0;
+			int hit = 0, fault = 0;
+			double faultRatio, hitRatio;
+			System.out.print("Enter the number of pages you want to enter: ");
+			noofpages = sc.nextInt();
+			int pages[] = new int[noofpages];
+
+			for (int i = 0; i < noofpages; i++) {
+				pages[i] = sc.nextInt();
+			}
+			System.out.print("Enter the capacity of frame: ");
+			capacity = sc.nextInt();
+			int frame[] = new int[capacity];
+			int table[][] = new int[noofpages][capacity];
+
+			for (int i = 0; i < capacity; i++) {
+				frame[i] = -1;
+			}
+			System.out.println("\n----------------------------------------------------------------------");
+			for (int i = 0; i < noofpages; i++) {
+				int search = -1;
+				for (int j = 0; j < capacity; j++) {
+					if (frame[j] == pages[i]) {
+						search = j;
+						hit++;
+						System.out.printf("%4s", "H");
+						break;
+					}
+				}
+				if (search == -1) {
+					frame[index] = pages[i];
+					fault++;
+					System.out.printf("%4s", "F");
+					index++;
+					if (index == capacity) {
+						index = 0;
+					}
+				}
+				System.arraycopy(frame, 0, table[i], 0, capacity);
+			}
+			System.out.println("\n----------------------------------------------------------------------");
+			for (int i = 0; i < capacity; i++) {
+				for (int j = 0; j < noofpages; j++)
+					System.out.printf("%3d ", table[j][i]);
+				System.out.println();
+			}
+
+			System.out.println("----------------------------------------------------------------------");
+			faultRatio = ((double) fault / noofpages) * 100;
+			hitRatio = ((double) hit / noofpages) * 100;
+			System.out.println("Page Fault: " + fault + "\nPage Hit: " + hit);
+			System.out.printf("Hit Ratio:%.2f \nFault Ratio:%.2f ", hitRatio, faultRatio);
+			sc.close();
+		}
+
+	}
+/*
+ * *** First Come First Serve Scheduling ***
+Enter Number of Process: 4
+
+Enter Arrival Time for processor 1:0
+Enter Burst Time for processor 1: 2
+
+Enter Arrival Time for processor 2:1
+Enter Burst Time for processor 2: 2
+
+Enter Arrival Time for processor 3:5
+Enter Burst Time for processor 3: 3
+
+Enter Arrival Time for processor 4:6
+Enter Burst Time for processor 4: 4
+
+*** First Come First Serve Scheduling ***
+Processor	Arrival time	Brust time	Completion Time		Turn around time	Waiting time
+----------------------------------------------------------------------------------------------------------
+P1		0ms		2ms		2ms			2ms			0ms
+P2		1ms		2ms		4ms			3ms			1ms
+P3		5ms		3ms		8ms			3ms			0ms
+P4		6ms		4ms		12ms			6ms			2ms
+
+Average turn around time of processor: 3.5ms
+Average waiting time of processor: 0.75ms
+Gantt chart = p1 p2//==// p3 p4
+              0 2 4     5   8  12
+              
+criteria = "Arrival time"
+Mode = non - preemitive
+turn around time = CT - AT
+waiting time = TAT-BT
+RT = Response Time = Time at which a process go the CPU cost - arrival time
+*/
